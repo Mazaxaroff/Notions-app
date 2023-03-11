@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Notions-app:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Notions-app</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Notions-app-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Notions-app:war exploded" />
+    </root>
+  </artifact>
+</component>
