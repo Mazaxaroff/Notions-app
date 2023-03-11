@@ -1,13 +1,16 @@
+<%@ page import="com.example.notionsapp.Notion" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Notions</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Ваши заметки:" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+
+<a href="/notions" >Показать заметки</a>
+
 </body>
 </html>
