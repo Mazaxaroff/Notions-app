@@ -13,6 +13,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Notions-app" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.26" />
+          <element id="library" level="project" name="Maven: org.json:json:20230227" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+        </element>
       </element>
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/Notions-app-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
