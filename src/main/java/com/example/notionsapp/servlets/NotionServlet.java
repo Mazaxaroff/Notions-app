@@ -1,4 +1,7 @@
-package com.example.notionsapp;
+package com.example.notionsapp.servlets;
+
+import com.example.notionsapp.Notion;
+import com.example.notionsapp.NotionRepository;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -21,14 +24,14 @@ public class NotionServlet extends HttpServlet {
         super.init(config);
         ServletContext servletContext = config.getServletContext();
         notionRepository = (NotionRepository) servletContext.getAttribute("allNotions");
-        notionRepository.CreateNotion("Ваша первая заметка", "Напишите что-нибудь");
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        notionRepository = (NotionRepository) getServletContext().getAttribute("allNotions");
         List<Notion> notions = (new ArrayList<>(notionRepository.getNotionMap().values()));
-        request.setAttribute("notionsList", notions);
+        req.setAttribute("notionsList", notions);
 
-        request.getRequestDispatcher("/WEB-INF/notions.jsp").forward(request, response);
+        req.getRequestDispatcher("/notions.jsp").forward(req, resp);
     }
 
     @Override
@@ -37,21 +40,31 @@ public class NotionServlet extends HttpServlet {
 
         switch (req.getParameter("mode")) {
             case "add":
-                if (req.getParameter("newNotionTitle") != null
-                        && req.getParameter("newNotionText") != null) {
-                    notionRepository.save(new Notion(req.getParameter("newNotionTitle"), req.getParameter("newNotionText")));
-                }
-                resp.sendRedirect("notions");
+                resp.sendRedirect("createNewNotion");
                 break;
             case "delete":
                 if (req.getParameter("uuid") != null) {
                     notionRepository.delete(UUID.fromString(req.getParameter("uuid")));
+                    getServletContext().setAttribute("allNotions", notionRepository);
                 }
+                notionRepository.getNotionMap().values().forEach(notion -> System.out.println(notion.getTitle()));
                 resp.sendRedirect("notions");
                 break;
-            case "edit":
-                resp.sendRedirect("notions?uuid=" + req.getParameter("uuid"));
+            case "open":
+                getServletContext().setAttribute("onlyOpen", true);
+                getServletContext().setAttribute("currentNotion", notionRepository
+                        .getNotionMap()
+                        .get(UUID.fromString(req.getParameter("uuid"))));
 
+                resp.sendRedirect("currentNotion");
+                break;
+            case "edit":
+                getServletContext().setAttribute("onlyOpen", false);
+                getServletContext().setAttribute("currentNotion", notionRepository
+                        .getNotionMap()
+                        .get(UUID.fromString(req.getParameter("uuid"))));
+                resp.sendRedirect("currentNotion");
+                break;
         }
     }
 }

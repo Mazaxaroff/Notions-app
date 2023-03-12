@@ -19,4 +19,11 @@ public class Notion {
         this.text = text;
         this.createDate = LocalDateTime.now();
     }
+
+    public Notion(UUID id, String title, String text, LocalDateTime createDate) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.createDate = createDate;
+    }
 }
